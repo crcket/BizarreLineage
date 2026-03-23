@@ -8,7 +8,6 @@ if getgenv().Settings.LowGFX then
     game:GetService("RunService"):Set3dRenderingEnabled(false)
 end
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/crcket/BizarreLineage/refs/heads/main/Background/LoadingScreenAI.lua")()
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -112,3 +111,4 @@ for i, v in pairs(getgenv().Settings.BuyRaidItems) do
     Requests:WaitForChild("raid_shop"):FireServer(v, "DIO")
     task.wait(0.5)
 end
+loadstring(game:HttpGet("https://raw.githubusercontent.com/crcket/BizarreLineage/refs/heads/main/Background/LoadingScreenAI.lua")()
