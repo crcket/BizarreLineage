@@ -1,0 +1,97 @@
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+if game.PlaceId ~= 74747090658891 then return end
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Requests = ReplicatedStorage.requests.character
+
+local LocalPlayer = Players.LocalPlayer
+
+local SkipLoaderRemote = Requests.spawn
+
+SkipLoaderRemote:FireServer()
+
+LocalPlayer.CharacterAdded:Wait()
+
+local Character = LocalPlayer.Character
+
+local SummonStandRemote = Character:WaitForChild("client_character_controller").SummonStand
+local Humanoid = Character:WaitForChild("Humanoid")
+local Root = Character:WaitForChild("HumanoidRootPart")
+
+SummonStandRemote:FireServer()
+LocalPlayer.PlayerGui:WaitForChild("Main Menu").Enabled = false
+
+local function KillNPC(NPC)
+local NPCHumanoid = NPC:FindFirstChildWhichIsA("Humanoid", true)
+if not NPCHumanoid then 
+return 
+end
+
+while NPCHumanoid.Health > 0 and NPC.Parent do
+    Character = LocalPlayer.Character
+    if not Character then task.wait(1) continue end
+    Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+    Root = Character:FindFirstChild("HumanoidRootPart")
+    if not Humanoid or not Root then task.wait(1) continue end
+    Requests:WaitForChild("use_item"):FireServer("Common Chest",{UseAll = true})
+    Requests:WaitForChild("use_item"):FireServer("Rare Chest",{UseAll = true})
+    Requests:WaitForChild("use_item"):FireServer("Legendary Chest",{UseAll = true})
+    
+    local torso = NPC:FindFirstChild("Torso") or NPC:FindFirstChild("HumanoidRootPart")
+    if torso then
+        Humanoid.Sit = true
+        Root.CFrame = torso.CFrame * CFrame.new(0, -5.5, 0)
+        Root.CFrame = CFrame.lookAt(Root.Position, torso.Position)
+        Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("E",true)
+        Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("E",false)
+        Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("R",true)
+        Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("R",false)
+        Character:WaitForChild("client_character_controller"):WaitForChild("M1"):FireServer(true,false)
+    end
+    task.wait()
+    end
+end
+
+
+
+local RaidOptions = {
+	["DIO"] = function()
+		repeat task.wait() until #workspace:WaitForChild("Live"):GetChildren() >=12
+		for _, v in workspace.Live:GetChildren() do
+			if not v.Name:find("Server") and not v.Name:find(LocalPlayer.Name) then
+				KillNPC(v)
+			end
+		end
+
+		for _, v in workspace.Live:GetChildren() do
+			if not v.Name:find("Server") and not v.Name:find(LocalPlayer.Name) then
+				KillNPC(v)
+			end
+		end
+
+		workspace.Live.ChildAdded:Connect(function(v)
+			if v.Name:find("DIO") then
+				KillNPC(v)
+				Requests.retryraid:FireServer()
+			end
+		end)
+	end,
+	["Jotaro Kujo"] = function()
+		workspace.Live.ChildAdded:Connect(function(v)
+			if v.Name:find("Jotaro") then
+				KillNPC(v)
+				Requests.retryraid:FireServer()
+			end
+		end)
+	end
+}
+
+for i,v in workspace.Map:GetChildren() do
+	if RaidOptions[v.Name] then
+		RaidOptions[v.Name]()
+	end
+end
