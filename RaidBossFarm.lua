@@ -4,8 +4,14 @@ end
 
 if game.PlaceId ~= 74747090658891 then return end
 
+if getgenv().Settings.LowGFX then
+    game:GetService("RunService"):Set3dRenderingEnabled(false)
+end
+
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
 local Requests = ReplicatedStorage.requests.character
 
 local LocalPlayer = Players.LocalPlayer
@@ -37,10 +43,7 @@ while NPCHumanoid.Health > 0 and NPC.Parent do
     Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
     Root = Character:FindFirstChild("HumanoidRootPart")
     if not Humanoid or not Root then task.wait(1) continue end
-    Requests:WaitForChild("use_item"):FireServer("Common Chest",{UseAll = true})
-    Requests:WaitForChild("use_item"):FireServer("Rare Chest",{UseAll = true})
-    Requests:WaitForChild("use_item"):FireServer("Legendary Chest",{UseAll = true})
-    
+	
     local torso = NPC:FindFirstChild("Torso") or NPC:FindFirstChild("HumanoidRootPart")
     if torso then
         Humanoid.Sit = true
@@ -94,4 +97,16 @@ for i,v in workspace.Map:GetChildren() do
 	if RaidOptions[v.Name] then
 		RaidOptions[v.Name]()
 	end
+end
+
+for i, v in pairs(getgenv().Settings.OpenChests) do
+    Requests:WaitForChild("use_item"):FireServer(v .. " Chest", {UseAll = true})
+    task.wait(0.5)
+end
+
+for i, v in pairs(getgenv().Settings.BuyRaidItems) do
+    Requests:WaitForChild("raid_shop"):FireServer(v, "Jotaro Kujo")
+    task.wait(0.5)
+    Requests:WaitForChild("raid_shop"):FireServer(v, "DIO")
+    task.wait(0.5)
 end
