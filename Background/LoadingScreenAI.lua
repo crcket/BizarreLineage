@@ -1,6 +1,6 @@
 -- AutofarmWaitScreen.lua
 -- LocalScript inside StarterPlayerScripts
-
+repeat task.wait() until game:IsLoaded()
 local Players      = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 
