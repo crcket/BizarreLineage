@@ -8,11 +8,8 @@ if getgenv().Settings.LowGFX then
     game:GetService("RunService"):Set3dRenderingEnabled(false)
 end
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/crcket/BizarreLineage/refs/heads/main/Background/LoadingScreenAI.lua"))()
-
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RunService = game:GetService("RunService")
 
 local Requests = ReplicatedStorage.requests.character
 
@@ -23,6 +20,8 @@ local SkipLoaderRemote = Requests.spawn
 SkipLoaderRemote:FireServer()
 
 LocalPlayer.CharacterAdded:Wait()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/crcket/BizarreLineage/refs/heads/main/Background/LoadingScreenAI.lua"))()
 
 local Character = LocalPlayer.Character
 
