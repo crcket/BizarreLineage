@@ -98,7 +98,7 @@ for i,v in workspace.Map:GetChildren() do
 		RaidOptions[v.Name]()
 	end
 end
-
+task.wait(10)
 for i, v in pairs(getgenv().Settings.OpenChests) do
     Requests:WaitForChild("use_item"):FireServer(v .. " Chest", {UseAll = true})
     task.wait(0.5)
