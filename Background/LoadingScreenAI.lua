@@ -182,7 +182,7 @@ workspace:WaitForChild("Live").ChildAdded:Connect(function()
 		bossHum = v:WaitForChild("Humanoid")
 	end
 end)
-
+repeat task.wait() until bossHum
 local barTweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 ProgressBar.Size = UDim2.new(bossHum.Health / bossHum.MaxHealth, 0, 1, 0)
