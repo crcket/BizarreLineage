@@ -189,7 +189,7 @@ local barTweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirect
 ProgressBar.Size = UDim2.new(bossHum.Health / bossHum.MaxHealth, 0, 1, 0)
 
 bossHum:GetPropertyChangedSignal("Health"):Connect(function()
-	InProgress.Text = `Progress: {math.round((bossHum.Health / bossHum.MaxHealth)*100)}%`
+	InProgress.Text = `Boss HP: {math.round((bossHum.Health / bossHum.MaxHealth)*100)}%`
 	TweenService:Create(ProgressBar, barTweenInfo, {
 		Size = UDim2.new(bossHum.Health / bossHum.MaxHealth, 0, 1, 0)
 	}):Play()
