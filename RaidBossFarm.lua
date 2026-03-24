@@ -21,7 +21,7 @@ SkipLoaderRemote:FireServer()
 
 LocalPlayer.CharacterAdded:Wait()
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/crcket/BizarreLineage/refs/heads/main/Background/LoadingScreenAI.lua"))()
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/crcket/BizarreLineage/refs/heads/main/Background/LoadingScreenAI.lua"))()
 
 local Character = LocalPlayer.Character
 
