@@ -184,13 +184,24 @@ workspace:WaitForChild("Live").ChildAdded:Connect(function(v)
 	end
 end)
 repeat task.wait() until bossHum
-local barTweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-ProgressBar.Size = UDim2.new(bossHum.Health / bossHum.MaxHealth, 0, 1, 0)
+local barTweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+local phaseMaxHP = bossHum.MaxHealth
+
+ProgressBar.Size = UDim2.new(1, 0, 1, 0)
 
 bossHum:GetPropertyChangedSignal("Health"):Connect(function()
-	InProgress.Text = `Boss HP: {math.round((bossHum.Health / bossHum.MaxHealth)*100)}%`
-	TweenService:Create(ProgressBar, barTweenInfo, {
-		Size = UDim2.new(bossHum.Health / bossHum.MaxHealth, 0, 1, 0)
-	}):Play()
+    local hp = bossHum.Health
+    local max = bossHum.MaxHealth
+
+    -- boss healed back up, meaning a phase reset happened
+    if hp > phaseMaxHP * 0.6 then
+        phaseMaxHP = hp
+    end
+
+    local pct = math.clamp(hp / phaseMaxHP, 0, 1)
+    InProgress.Text = `Boss HP: {math.round(pct * 100)}%`
+    TweenService:Create(ProgressBar, barTweenInfo, {
+        Size = UDim2.new(pct, 0, 1, 0)
+    }):Play()
 end)
