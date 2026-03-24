@@ -51,7 +51,7 @@ BGGradient.Parent = BGStroke
 -- Progress Label
 local InProgress = Instance.new("TextLabel")
 InProgress.Font = Enum.Font.GothamBold
-InProgress.Text = "Progress: 0%"
+InProgress.Text = "Boss HP: 100%"
 InProgress.TextColor3 = Color3.fromRGB(255, 255, 255)
 InProgress.TextSize = 25
 InProgress.TextWrapped = true
@@ -91,7 +91,7 @@ ProgressBar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ProgressBar.BorderSizePixel = 0
 ProgressBar.AnchorPoint = Vector2.new(0, 0)
 ProgressBar.Position = UDim2.new(0, 0, 0, 0)
-ProgressBar.Size = UDim2.new(0, 0, 1, 0)
+ProgressBar.Size = UDim2.new(1, 0, 1, 0)
 ProgressBar.Parent = BossBarHolder
 
 local ProgressBarGradient = Instance.new("UIGradient")
