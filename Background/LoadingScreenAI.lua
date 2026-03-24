@@ -186,18 +186,19 @@ end)
 repeat task.wait() until bossHum
 
 local barTweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-local phaseMaxHP = bossHum.MaxHealth
+local phaseMaxHP = bossHum.Health
+local lastHP = bossHum.Health
 
 ProgressBar.Size = UDim2.new(1, 0, 1, 0)
 
 bossHum:GetPropertyChangedSignal("Health"):Connect(function()
     local hp = bossHum.Health
-    local max = bossHum.MaxHealth
 
-    -- boss healed back up, meaning a phase reset happened
-    if hp > phaseMaxHP * 0.6 then
+    if hp - lastHP > bossHum.MaxHealth * 0.5 then
         phaseMaxHP = hp
     end
+
+    lastHP = hp
 
     local pct = math.clamp(hp / phaseMaxHP, 0, 1)
     InProgress.Text = `Boss HP: {math.round(pct * 100)}%`
