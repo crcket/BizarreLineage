@@ -178,6 +178,7 @@ TweenService:Create(CircleActive, circleTweenInfo, {BackgroundTransparency = 1})
 
 workspace:WaitForChild("Live").ChildAdded:Connect(function(v)
 	task.wait()
+	print(v)
 	if v.Name:find("Jotaro") or v.Name:find("DIO") then
 		bossHum = v:WaitForChild("Humanoid")
 	end
