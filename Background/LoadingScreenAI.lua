@@ -177,6 +177,7 @@ local circleTweenInfo = TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirec
 TweenService:Create(CircleActive, circleTweenInfo, {BackgroundTransparency = 1}):Play()
 
 workspace.Live.ChildAdded:Connect(function()
+	task.wait()
 	if v.Name:find("Jotaro") or v.Name:find("DIO") then
 		bossHum = v:WaitForChild("Humanoid")
 	end
