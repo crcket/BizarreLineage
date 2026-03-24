@@ -21,8 +21,9 @@ SkipLoaderRemote:FireServer()
 
 LocalPlayer.CharacterAdded:Wait()
 
+task.spawn(function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/crcket/BizarreLineage/refs/heads/main/Background/LoadingScreenAI.lua"))()
-
+	end)
 local Character = LocalPlayer.Character
 
 local SummonStandRemote = Character:WaitForChild("client_character_controller").SummonStand
