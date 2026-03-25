@@ -24,7 +24,9 @@ Box.Position = UDim2.new(0.5, 0, 0.5, 0)
 Box.Size = UDim2.new(0, 400, 0, 200)
 Box.Parent = Background
 
-Instance.new("UICorner").Parent = Box
+local uc = Instance.new("UICorner")
+uc.Parent = Box
+uc.CornerRadius = UDim2.new(0,5)
 
 local BoxStroke = Instance.new("UIStroke")
 BoxStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
