@@ -136,7 +136,7 @@ BossBarHolder.BackgroundColor3 = Color3.fromRGB(13, 17, 32)
 BossBarHolder.BorderSizePixel = 0
 BossBarHolder.Position = UDim2.new(0.5, 0, 0.75, 0)
 BossBarHolder.Size = UDim2.new(0, 380, 0, 15)
-BossBarHolder.ZIndex = 0
+BossBarHolder.ZIndex = 1
 BossBarHolder.Parent = Box
 
 local BossBarHolderCorner = Instance.new("UICorner")
