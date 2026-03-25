@@ -82,15 +82,16 @@ local function KillNPC(NPC)
             	Root.CFrame = torso.CFrame * CFrame.new(0, -5.5, 0)
             	Root.CFrame = CFrame.lookAt(Root.Position, torso.Position)
 			end)
-			for _, v in Combo do
-				if table.find(MovesOnCooldown, v) then continue end
-					if v.Key == "M1" then
-						for amt = 1, v.Uses do
-							print(amt)
-								M1:FireServer(true, false)
-							task.wait(v.Cooldown)
-						end
-					else
+			task.spawn(function()
+				for _, v in Combo do
+					if table.find(MovesOnCooldown, v) then continue end
+						if v.Key == "M1" then
+							for amt = 1, v.Uses do
+								print(amt)
+									M1:FireServer(true, false)
+								task.wait(v.Cooldown)
+							end
+						else
 						table.insert(MovesOnCooldown, v)
 						for amt = 1, v.Uses do
 							print("use"..v.Key)
@@ -100,8 +101,8 @@ local function KillNPC(NPC)
 						task.wait(v.UseDuration)
 						table.remove(MovesOnCooldown, table.find(MovesOnCooldown, v))
 					end
-			end
-			
+				end
+			end)
         end
         task.wait()
     end
