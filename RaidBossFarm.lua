@@ -34,32 +34,42 @@ SummonStandRemote:FireServer()
 LocalPlayer.PlayerGui:WaitForChild("Main Menu").Enabled = false
 
 local function KillNPC(NPC)
-local NPCHumanoid = NPC:FindFirstChildWhichIsA("Humanoid", true)
-if not NPCHumanoid then 
-return 
-end
+    local NPCHumanoid = NPC:FindFirstChildWhichIsA("Humanoid", true)
+    if not NPCHumanoid then return end
 
-while NPCHumanoid.Health > 0 and NPC.Parent do
-    Character = LocalPlayer.Character
-    if not Character then task.wait(1) continue end
-    Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
-    Root = Character:FindFirstChild("HumanoidRootPart")
-    if not Humanoid or not Root then task.wait(1) continue end
-	
-    local torso = NPC:FindFirstChild("Torso") or NPC:FindFirstChild("HumanoidRootPart")
-    if torso then
-        Humanoid.Sit = true
-        Root.CFrame = torso.CFrame * CFrame.new(0, -5.5, 0)
-        Root.CFrame = CFrame.lookAt(Root.Position, torso.Position)
+    -- cache remotes once instead of WaitForChild every iteration
+    local controller = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("client_character_controller")
+    local Skill = controller and controller:FindFirstChild("Skill")
+    local M1 = controller and controller:FindFirstChild("M1")
+    if not Skill or not M1 then return end
 
-		for i,v in getgenv().Settings.UseMoves do
-			Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer(v,true)
-        	Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer(v,false)
-		end
-        Character:WaitForChild("client_character_controller"):WaitForChild("M1"):FireServer(true,false)
+    -- break out immediately when health hits 0 instead of waiting for next loop
+    local died = false
+    local conn = NPCHumanoid.Died:Connect(function()
+        died = true
+    end)
+
+    while not died and NPC.Parent do
+        Character = LocalPlayer.Character
+        if not Character then task.wait(1) continue end
+        Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+        Root = Character:FindFirstChild("HumanoidRootPart")
+        if not Humanoid or not Root then task.wait(1) continue end
+
+        local torso = NPC:FindFirstChild("Torso") or NPC:FindFirstChild("HumanoidRootPart")
+        if torso then
+            Humanoid.Sit = true
+            Root.CFrame = torso.CFrame * CFrame.new(0, -5.5, 0)
+            Root.CFrame = CFrame.lookAt(Root.Position, torso.Position)
+            for _, v in getgenv().Settings.UseMoves do
+                Skill:FireServer(v, true)
+                Skill:FireServer(v, false)
+            end
+            M1:FireServer(true, false)
+        end
+        task.wait()
     end
-    task.wait()
-    end
+    conn:Disconnect()
 end
 
 
