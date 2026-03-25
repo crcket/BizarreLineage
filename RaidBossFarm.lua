@@ -51,6 +51,11 @@ while NPCHumanoid.Health > 0 and NPC.Parent do
         Humanoid.Sit = true
         Root.CFrame = torso.CFrame * CFrame.new(0, -5.5, 0)
         Root.CFrame = CFrame.lookAt(Root.Position, torso.Position)
+
+		for i,v in getgenv().Settings.UseMoves do
+			Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer(v,true)
+        	Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer(v,false)
+		end
         Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("E",true)
         Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("E",false)
         Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("R",true)
