@@ -8,6 +8,25 @@ if getgenv().Settings.LowGFX then
     game:GetService("RunService"):Set3dRenderingEnabled(false)
 end
 
+local Moves = {
+    ["M1"] = {["Key"] = "M1", ["Cooldown"] = 0.5,   ["Uses"] = 4, ["UseDuration"] = 3},
+    ["E"]  = {["Key"] = "E",  ["Cooldown"] = 12.5,  ["Uses"] = 1, ["UseDuration"] = 2.1},
+	["R"]  = {["Key"] = "R",  ["Cooldown"] = 10,    ["Uses"] = 1, ["UseDuration"] = 2},
+	["X"]  = {["Key"] = "X",  ["Cooldown"] = 10,    ["Uses"] = 1, ["UseDuration"] = 2},
+}
+
+local Combo = {
+    Moves.M1,
+    Moves.E,
+    Moves.M1,
+	Moves.R,
+	Moves.M1,
+	Moves.X,
+	Moves.M1
+}
+
+local MovesOnCooldown = {}
+
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -58,14 +77,31 @@ local function KillNPC(NPC)
 
         local torso = NPC:FindFirstChild("Torso") or NPC:FindFirstChild("HumanoidRootPart")
         if torso then
-            Humanoid.Sit = true
-            Root.CFrame = torso.CFrame * CFrame.new(0, -5.5, 0)
-            Root.CFrame = CFrame.lookAt(Root.Position, torso.Position)
-            for _, v in getgenv().Settings.UseMoves do
-                Skill:FireServer(v, true)
-                Skill:FireServer(v, false)
-            end
-            M1:FireServer(true, false)
+			task.spawn(function()
+            	Humanoid.Sit = true
+            	Root.CFrame = torso.CFrame * CFrame.new(0, -5.5, 0)
+            	Root.CFrame = CFrame.lookAt(Root.Position, torso.Position)
+			end)
+			for _, v in Combo do
+				if table.find(MovesOnCooldown, v) then continue end
+					if v.Key == "M1" then
+						for amt = 1, v.Uses do
+							print(amt)
+								M1:FireServer(true, false)
+							task.wait(v.Cooldown)
+						end
+					else
+						table.insert(MovesOnCooldown, v)
+						for amt = 1, v.Uses do
+							print("use"..v.Key)
+								Skill:FireServer(v.Key, true)
+							Skill:FireServer(v.Key, false)
+						end
+						task.wait(v.UseDuration)
+						table.remove(MovesOnCooldown, table.find(MovesOnCooldown, v))
+					end
+			end
+			
         end
         task.wait()
     end
