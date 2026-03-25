@@ -101,15 +101,17 @@ for i,v in workspace.Map:GetChildren() do
 	end
 end
 task.wait(10)
-for i, v in pairs(getgenv().Settings.OpenChests) do
-    Requests:WaitForChild("use_item"):FireServer(v .. " Chest", {UseAll = true})
-    task.wait(0.5)
-end
-
-for i, v in pairs(getgenv().Settings.BuyRaidItems) do
-    Requests:WaitForChild("raid_shop"):FireServer(v, "Jotaro Kujo")
-    task.wait(0.5)
-    Requests:WaitForChild("raid_shop"):FireServer(v, "DIO")
-    task.wait(0.5)
-end
-
+task.spawn(function()
+	for i, v in pairs(getgenv().Settings.OpenChests) do
+	    Requests:WaitForChild("use_item"):FireServer(v .. " Chest", {UseAll = true})
+	    task.wait(0.5)
+	end
+end)
+task.spawn(function()
+	for i, v in pairs(getgenv().Settings.BuyRaidItems) do
+	    Requests:WaitForChild("raid_shop"):FireServer(v, "Jotaro Kujo")
+	    task.wait(0.5)
+	    Requests:WaitForChild("raid_shop"):FireServer(v, "DIO")
+	    task.wait(0.5)
+	end
+end)
