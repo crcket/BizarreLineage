@@ -203,7 +203,6 @@ task.spawn(function()
 	end)
 end)
 
-repeat task.wait() until bossHum
 local barTweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 HPBar.Size = UDim2.new(bossHum.Health / bossHum.MaxHealth, 0, 1, 0)
