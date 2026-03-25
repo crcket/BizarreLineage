@@ -1,3 +1,5 @@
+-- combo testing (come to later)
+
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
