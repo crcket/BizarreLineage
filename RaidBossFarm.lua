@@ -53,30 +53,20 @@ SummonStandRemote:FireServer()
 LocalPlayer.PlayerGui:WaitForChild("Main Menu").Enabled = false
 
 local function KillNPC(NPC)
-    local NPCHumanoid = NPC:FindFirstChildWhichIsA("Humanoid", true)
-    if not NPCHumanoid then return end
+local NPCHumanoid = NPC:FindFirstChildWhichIsA("Humanoid", true)
+if not NPCHumanoid then 
+return 
+end
 
-    -- cache remotes once instead of WaitForChild every iteration
-    local controller = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("client_character_controller")
-    local Skill = controller and controller:FindFirstChild("Skill")
-    local M1 = controller and controller:FindFirstChild("M1")
-    if not Skill or not M1 then return end
-
-    -- break out immediately when health hits 0 instead of waiting for next loop
-    local died = false
-    local conn = NPCHumanoid.Died:Connect(function()
-        died = true
-    end)
-
-    while not died and NPC.Parent do
-        Character = LocalPlayer.Character
-        if not Character then task.wait(1) continue end
-        Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
-        Root = Character:FindFirstChild("HumanoidRootPart")
-        if not Humanoid or not Root then task.wait(1) continue end
-
-        local torso = NPC:FindFirstChild("Torso") or NPC:FindFirstChild("HumanoidRootPart")
-        if torso then
+while NPCHumanoid.Health > 0 and NPC.Parent do
+    Character = LocalPlayer.Character
+    if not Character then task.wait(1) continue end
+    Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+    Root = Character:FindFirstChild("HumanoidRootPart")
+    if not Humanoid or not Root then task.wait(1) continue end
+	
+    local torso = NPC:FindFirstChild("Torso") or NPC:FindFirstChild("HumanoidRootPart")
+    if torso then
 			task.spawn(function()
             	Humanoid.Sit = true
             	Root.CFrame = torso.CFrame * CFrame.new(0, -5.5, 0)
@@ -87,14 +77,12 @@ local function KillNPC(NPC)
 					if table.find(MovesOnCooldown, v) then continue end
 						if v.Key == "M1" then
 							for amt = 1, v.Uses do
-								print(amt)
 									M1:FireServer(true, false)
 								task.wait(v.Cooldown)
 							end
 						else
 						table.insert(MovesOnCooldown, v)
 						for amt = 1, v.Uses do
-							print("use"..v.Key)
 								Skill:FireServer(v.Key, true)
 							Skill:FireServer(v.Key, false)
 						end
@@ -104,11 +92,7 @@ local function KillNPC(NPC)
 				end
 			end)
         end
-        task.wait()
-    end
-    conn:Disconnect()
 end
-
 
 
 local RaidOptions = {
