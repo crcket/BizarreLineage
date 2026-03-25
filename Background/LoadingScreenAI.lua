@@ -192,7 +192,6 @@ RunService.Heartbeat:Connect(function(dt)
 	ActiveLabel.Text = `AUTOFARM ACTIVE — {math.round(workspace.DistributedGameTime)}s`
 end)
 
-task.spawn(function()
 	local bob = workspace:WaitForChild("Live").ChildAdded:Connect(function(v)
 		task.wait()
 		print(v)
@@ -200,12 +199,11 @@ task.spawn(function()
 			bossHum = v:WaitForChild("Humanoid")
 		end
 	end)
-end)
 
 local barTweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
 HPBar.Size = UDim2.new(bossHum.Health / bossHum.MaxHealth, 0, 1, 0)
-
+bob:Disconnect()
 bossHum:GetPropertyChangedSignal("Health"):Connect(function()
 	Percentage.Text = `{math.round((bossHum.Health / bossHum.MaxHealth)*100)}%`
 	TweenService:Create(HPBar, barTweenInfo, {
