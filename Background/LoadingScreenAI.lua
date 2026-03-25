@@ -193,12 +193,14 @@ RunService.Heartbeat:Connect(function(dt)
 	ActiveLabel.Text = `AUTOFARM ACTIVE — {math.round(workspace.DistributedGameTime)}s`
 end)
 
-workspace:WaitForChild("Live").ChildAdded:Connect(function(v)
-	task.wait()
-	print(v)
-	if v.Name:find("Jotaro") or v.Name:find("DIO") then
-		bossHum = v:WaitForChild("Humanoid")
-	end
+task.spawn(function()
+	local bob = workspace:WaitForChild("Live").ChildAdded:Connect(function(v)
+		task.wait()
+		print(v)
+		if v.Name:find("Jotaro") or v.Name:find("DIO") then
+			bossHum = v:WaitForChild("Humanoid")
+		end
+	end)
 end)
 
 repeat task.wait() until bossHum
