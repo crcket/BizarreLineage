@@ -90,6 +90,7 @@ local RaidOptions = {
 		workspace.Live.ChildAdded:Connect(function(v)
 			if v.Name:find("Jotaro") then
 				KillNPC(v)
+				print("he died")
 				Requests.retryraid:FireServer()
 			end
 		end)
