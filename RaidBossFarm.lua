@@ -56,12 +56,6 @@ while NPCHumanoid.Health > 0 and NPC.Parent do
 			Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer(v,true)
         	Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer(v,false)
 		end
-        Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("E",true)
-        Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("E",false)
-        Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("R",true)
-        Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("R",false)
-		Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("X",true)
-		Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("X",false)
         Character:WaitForChild("client_character_controller"):WaitForChild("M1"):FireServer(true,false)
     end
     task.wait()
@@ -107,7 +101,6 @@ for i,v in workspace.Map:GetChildren() do
 		RaidOptions[v.Name]()
 	end
 end
-task.wait(10)
 task.spawn(function()
 	for i, v in pairs(getgenv().Settings.OpenChests) do
 	    Requests:WaitForChild("use_item"):FireServer(v .. " Chest", {UseAll = true})
