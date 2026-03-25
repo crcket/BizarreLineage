@@ -55,6 +55,8 @@ while NPCHumanoid.Health > 0 and NPC.Parent do
         Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("E",false)
         Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("R",true)
         Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("R",false)
+		Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("X",true)
+		Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer("X",false)
         Character:WaitForChild("client_character_controller"):WaitForChild("M1"):FireServer(true,false)
     end
     task.wait()
