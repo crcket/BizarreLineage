@@ -201,7 +201,7 @@ end)
 	end)
 
 local barTweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-
+repeat task.wait() until bossHum
 HPBar.Size = UDim2.new(bossHum.Health / bossHum.MaxHealth, 0, 1, 0)
 bob:Disconnect()
 bossHum:GetPropertyChangedSignal("Health"):Connect(function()
