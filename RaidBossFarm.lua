@@ -24,7 +24,6 @@ SkipLoaderRemote:FireServer()
 
 LocalPlayer.CharacterAdded:Wait()
 
-
 local Character = LocalPlayer.Character
 
 local SummonStandRemote = Character:WaitForChild("client_character_controller").SummonStand
