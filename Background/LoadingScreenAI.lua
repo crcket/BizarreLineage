@@ -1,9 +1,8 @@
-repeat task.wait() until game:IsLoaded()
 
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 
-local LoadingScreen = Instance.new("ScreenGui",gethui())
+local LoadingScreen = Instance.new("ScreenGui",game.CoreGui)
 LoadingScreen.IgnoreGuiInset=true
 
 -- Background
