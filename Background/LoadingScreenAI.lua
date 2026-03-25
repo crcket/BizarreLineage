@@ -1,9 +1,13 @@
 repeat task.wait() until game:IsLoaded()
-
+if not gethui then
+	gethui = function()
+		return game.CoreGui
+	end
+end
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 
-local LoadingScreen = Instance.new("ScreenGui",game.CoreGui)
+local LoadingScreen = Instance.new("ScreenGui",gethui())
 LoadingScreen.IgnoreGuiInset=true
 
 -- Background
