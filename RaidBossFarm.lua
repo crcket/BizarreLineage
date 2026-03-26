@@ -11,6 +11,15 @@ if getgenv().Settings.LowGFX then
 	end)
 end
 
+if not isfile("BizarreLineage/Jotaro.mp3") then
+	local data = request({Url = "https://raw.githubusercontent.com/crcket/BizarreLineage/refs/heads/main/Background/JotaroTheme.mp3"}).Body
+	writefile("BizarreLineage/Jotaro.mp3",data)
+end
+
+local JotaroTheme = getcustomasset("BizarreLineage/Jotaro.mp3")
+local Sound = Instance.new("Sound",workspace)
+Sound.SoundId = JotaroTheme
+
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -31,6 +40,8 @@ local Humanoid = Character:WaitForChild("Humanoid")
 local Root = Character:WaitForChild("HumanoidRootPart")
 
 SummonStandRemote:FireServer()
+
+
 LocalPlayer.PlayerGui:WaitForChild("Main Menu").Enabled = false
 
 local function KillNPC(NPC)
@@ -87,6 +98,7 @@ local RaidOptions = {
 		end)
 	end,
 	["Jotaro Kujo"] = function()
+		Sound:Play()
 		workspace.Live.ChildAdded:Connect(function(v)
 			if v.Name:find("Jotaro") then
 				KillNPC(v)
