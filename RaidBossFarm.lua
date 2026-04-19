@@ -105,6 +105,14 @@ local RaidOptions = {
 				Requests.retryraid:FireServer()
 			end
 		end)
+	end,
+	["Death 13"] = function()
+		workspace.Live.ChildAdded:Connect(function(v)
+			if v.Name:find("Death") then
+				KillNPC(v)
+				Requests.retryraid:FireServer()
+			end
+		end)
 	end
 }
 
