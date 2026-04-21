@@ -173,7 +173,7 @@ local RaidOptions = {
 					end
 				end
 				for _, child in workspace.Live:GetChildren() do
-					if not child.Name:find("Server") and not child.Name:find(LocalPlayer.Name) then
+					if not child.Name:find("Server") and not child.Name:find(LocalPlayer.Name) and not child.Name:find("star")  then
 						FightNPC(child,function()
                             return child.Parent ~= nil
                         end)
