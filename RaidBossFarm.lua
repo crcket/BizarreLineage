@@ -6,6 +6,13 @@ if game.PlaceId ~= 74747090658891 then
 	return
 end
 
+if getgenv().Settings.LowGFX then
+    game:GetService("RunService"):Set3dRenderingEnabled(false)
+	task.spawn(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/crcket/BizarreLineage/refs/heads/main/Background/LoadingScreenAI.lua"))()
+	end)
+end
+
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
