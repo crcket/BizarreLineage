@@ -109,7 +109,7 @@ local function OpenChests()
 	end
 end
 
-local function BuyRaidItems() -- will update for new raids later :tm:
+local function BuyRaidItems()
 	for _, v in pairs(getgenv().Settings.BuyRaidItems) do
 		Requests:WaitForChild("raid_shop"):FireServer(v, "Jotaro Kujo")
 		task.wait(0.5)
@@ -167,7 +167,9 @@ local RaidOptions = {
 				end
 				for _, child in workspace.Live:GetChildren() do
 					if not child.Name:find("Server") and not child.Name:find(LocalPlayer.Name) then
-						FightNPC(child)
+						FightNPC(child,function()
+                            return child.Parent ~= nil
+                        end)
                         Requests.retryraid:FireServer()
 					end
 				end
