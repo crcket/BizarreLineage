@@ -188,8 +188,12 @@ local RaidOptions = {
 for _, v in workspace.Map:GetChildren() do
 	if RaidOptions[v.Name] then
 		RaidOptions[v.Name]()
-        task.wait(3)
+        task.wait(2)
         SummonStandRemote:FireServer()
+		LocalPlayer.CharacterAdded:Connect(function()
+			task.wait(2)
+        	SummonStandRemote:FireServer()
+		end)
 	end
 end
 
