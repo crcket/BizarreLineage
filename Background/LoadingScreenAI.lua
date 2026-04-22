@@ -195,12 +195,15 @@ end)
 	local bob = workspace:WaitForChild("Live").ChildAdded:Connect(function(v)
 		task.wait()
 		print(v)
-		if v.Name:find("Jotaro") or v.Name:find("DIO") then
+		if v.Name:find("Jotaro") or v.Name:find("DIO") or v.Name:find("13") then
 			bossHum = v:WaitForChild("Humanoid")
 		end
 	end)
 
 local barTweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+Percentage.Text = `Raid currently not supported / has a boss way later on that i'm too lazy to add.`
+
 repeat task.wait() until bossHum
 HPBar.Size = UDim2.new(bossHum.Health / bossHum.MaxHealth, 0, 1, 0)
 bob:Disconnect()
