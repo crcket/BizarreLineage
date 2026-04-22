@@ -109,6 +109,16 @@ local function FightNPC(NPC, stopCondition)
 	end
 end
 
+local function CountNpcViaNames(NameOption)
+    local collected = {}
+    for _,NPC in workspace.Live:GetChildren() do
+        if not Players:GetPlayerFromCharacter(NPC) and NPC.Name ~= "Server" and NPC.Name:find(NameOption) then
+            table.insert(collected,NPC)
+        end
+    end
+    return #collected
+end
+
 local function OpenChests()
 	for _, v in pairs(getgenv().Settings.OpenChests) do
 		Requests:WaitForChild("use_item"):FireServer(v .. " Chest", { UseAll = true })
@@ -160,7 +170,6 @@ local RaidOptions = {
 			end
 		end)
 	end,
-
 	["Heaven Ascension DIO"] = function()
 		workspace.Live.ChildAdded:Connect(function(v)
 			if v.Name:find("DIO") then
@@ -183,13 +192,58 @@ local RaidOptions = {
 			end
 		end)
 	end,
+    ["Prison Escape"] = function()
+       repeat task.wait() until CountNpcViaNames("Prisoner") >=16
+
+		for _, v in workspace.Live:GetChildren() do
+			if not v.Name:find("Server") and not v.Name:find(LocalPlayer.Name) then
+				FightNPC(v)
+			end
+		end
+
+        repeat task.wait() until CountNpcViaNames("Police") >= 8
+
+		for _, v in workspace.Live:GetChildren() do
+			if not v.Name:find("Server") and not v.Name:find(LocalPlayer.Name) then
+				FightNPC(v)
+			end
+		end
+
+        repeat task.wait() until CountNpcViaNames("Pucci") >= 1
+
+        for _, v in workspace.Live:GetChildren() do
+			if not v.Name:find("Server") and not v.Name:find(LocalPlayer.Name) and v.Name:find("Pucci") then
+				FightNPC(v)
+			end
+		end
+
+        task.wait(2)
+        
+        for _, v in workspace.Live:GetChildren() do
+			if not v.Name:find("Server") and not v.Name:find(LocalPlayer.Name) and v.Name:find("Pucci") then
+				FightNPC(v)
+			end
+		end
+
+        task.wait(2)
+        
+        for _, v in workspace.Live:GetChildren() do
+			if not v.Name:find("Server") and not v.Name:find(LocalPlayer.Name) and v.Name:find("Pucci") then
+				FightNPC(v)
+			end
+		end
+        Requests.retryraid:FireServer()
+    end
 }
 
 for _, v in workspace.Map:GetChildren() do
 	if RaidOptions[v.Name] then
-		RaidOptions[v.Name]()
-        task.wait(2)
-        SummonStandRemote:FireServer()
+    print(RaidOptions[v.Name])
+        task.spawn(function()
+            task.wait(2)
+            SummonStandRemote:FireServer()
+        end)
+	    RaidOptions[v.Name]()
 		LocalPlayer.CharacterAdded:Connect(function()
 			task.wait(2)
         	SummonStandRemote:FireServer()
