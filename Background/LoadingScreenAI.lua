@@ -202,7 +202,7 @@ end)
 
 local barTweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-Percentage.Text = `Raid currently not supported / has a boss way later on that i'm too lazy to add.`
+Percentage.Text = `???%`
 
 repeat task.wait() until bossHum
 HPBar.Size = UDim2.new(bossHum.Health / bossHum.MaxHealth, 0, 1, 0)
