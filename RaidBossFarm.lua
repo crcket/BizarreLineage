@@ -151,7 +151,14 @@ local RaidOptions = {
 			end
 		end)
 	end,
-
+	["Muhammad Avdol"] = function()
+		workspace.Live.ChildAdded:Connect(function(v)
+			if v.Name:find("Avdol") then
+				FightNPC(v)
+				Requests.retryraid:FireServer()
+			end
+		end)
+	end,
 	["Jotaro Kujo"] = function()
 		Sound:Play()
 		workspace.Live.ChildAdded:Connect(function(v)
@@ -170,6 +177,7 @@ local RaidOptions = {
 			end
 		end)
 	end,
+	
 	["Heaven Ascension DIO"] = function()
 		workspace.Live.ChildAdded:Connect(function(v)
 			if v.Name:find("DIO") then
