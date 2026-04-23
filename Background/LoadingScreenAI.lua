@@ -195,7 +195,7 @@ end)
 	local bob = workspace:WaitForChild("Live").ChildAdded:Connect(function(v)
 		task.wait()
 		print(v)
-		if v.Name:find("Jotaro") or v.Name:find("DIO") or v.Name:find("13") or v.Name:find("Ascend") then
+		if v.Name:find("Jotaro") or v.Name:find("DIO") or v.Name:find("13") or v.Name:find("Ascend") or v.Name:find("Avdol") then
 			bossHum = v:WaitForChild("Humanoid")
 		end
 	end)
