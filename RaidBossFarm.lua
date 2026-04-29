@@ -131,6 +131,8 @@ local function BuyRaidItems()
 		Requests:WaitForChild("raid_shop"):FireServer(v, "Jotaro Kujo")
 		task.wait(0.5)
 		Requests:WaitForChild("raid_shop"):FireServer(v, "DIO")
+		task.wait(0.5)
+		Requests:WaitForChild("raid_shop"):FireServer(v, "Death 13")
 	end
 end
 
