@@ -245,7 +245,10 @@ local RaidOptions = {
         Requests.retryraid:FireServer()
     end
 }
-
+task.spawn(function()
+	task.wait(900)
+	Requests.retryraid:FireServer()
+end)
 for _, v in workspace.Map:GetChildren() do
 	if RaidOptions[v.Name] then
     print(RaidOptions[v.Name])
