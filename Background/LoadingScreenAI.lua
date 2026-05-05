@@ -1,4 +1,3 @@
--- loading
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 
